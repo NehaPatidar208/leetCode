@@ -14,6 +14,5 @@ class Solution {
             }
         }
         return true;
-        
     }
 }
