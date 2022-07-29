@@ -1,0 +1,33 @@
+class Solution {
+    int ballNo=0;
+    int[] result;
+    void helper(int[][]grid,int curI,int curJ){
+        if(curJ >= grid[0].length || curI >= grid.length || result[ballNo] != -2)return;
+        
+        if(grid[curI][curJ] == 1 && (curJ +1 == grid[curI].length || grid[curI][curJ+1] == -1)) {
+            result[ballNo] = -1;
+            return;
+        }
+        if(grid[curI][curJ] == -1 && (curJ == 0 || grid[curI][curJ-1] == 1)){
+            result[ballNo] = -1;
+            return;
+        }
+        curJ += grid[curI][curJ];
+        if(curI == grid.length-1){
+            result[ballNo]=curJ;
+            return;
+        }
+        curI++;
+        helper(grid,curI,curJ);
+    }
+    public int[] findBall(int[][] grid) {
+        if(grid.length ==0)return null;
+        result = new int[grid[0].length];
+        Arrays.fill(result,-2);
+        for(int i =0;i<result.length;i++){
+            helper(grid,0,i);
+            ballNo++;
+        }
+        return result;
+    }
+}
