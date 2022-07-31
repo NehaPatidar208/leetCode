@@ -1,0 +1,41 @@
+class Solution {
+    
+    public List<List<String>> groupAnagrams(String[] strs) {
+        List<List<String>>result= new ArrayList<>();
+        if(strs.length < 2){
+            result.add(new ArrayList(Arrays.asList(strs)));
+            return result;
+        }
+        Map<String,List<String>> map = new HashMap<>();
+        for(int i =0;i<strs.length;i++){
+            String key = anagram(strs[i]);
+            if(!map.containsKey(key)){
+                map.put(key,new ArrayList(Arrays.asList(strs[i])));
+            }
+            else{
+                List<String> ar = map.get(key);
+                ar.add(strs[i]);
+                map.put(key,ar);
+            }
+        }
+        
+        for(Map.Entry<String,List<String>> element: map.entrySet()){
+            result.add(element.getValue());
+        }
+        return result;
+    }
+    String anagram(String s){
+        int []ar = new int[26];
+        for(int i=0;i<s.length();i++){
+           ar[s.charAt(i)-'a']++; 
+        }
+        String result="";
+        for(int i=0;i<26;i++){
+            while(ar[i]!=0){
+                result+=(String.valueOf((char)(i+'a')));
+                ar[i]--;
+            }
+        }
+        return result;
+    }
+}
